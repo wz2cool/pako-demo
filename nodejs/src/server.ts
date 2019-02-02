@@ -8,8 +8,8 @@ import {
   SwaggerOptions
 } from "swagger-ts-doc";
 import * as swaggerUi from "swagger-ui-express";
+import { PakojsApi } from "./api/pakojsApi";
 import { StudentApi } from "./api/studentApi";
-import { Student } from "./model/entity/student";
 
 export class Server {
   public static bootstrap(): Server {
@@ -33,11 +33,13 @@ export class Server {
 
   private routes(): void {
     const studentApi = new StudentApi();
+    const pakojsApi = new PakojsApi();
     this.app.get("/", (req, res) => {
       // 指定 /views/idex.ejs
       res.render("index.ejs");
     });
     this.app.use("/students", studentApi.getRoute());
+    this.app.use("/pakojs", pakojsApi.getRoute());
   }
 
   private initSwagger(): void {
