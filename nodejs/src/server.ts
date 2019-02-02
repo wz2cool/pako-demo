@@ -2,9 +2,9 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as path from "path";
 import {
-  registerApiModel,
   SwaggerInfoProperty,
   swaggerJSDoc,
+  // tslint:disable-next-line:trailing-comma
   SwaggerOptions
 } from "swagger-ts-doc";
 import * as swaggerUi from "swagger-ui-express";
@@ -23,6 +23,8 @@ export class Server {
   }
 
   private config(): void {
+    this.app.set("view engine", "ejs");
+    this.app.set("views", __dirname + "/views");
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.routes();
@@ -52,12 +54,14 @@ export class Server {
     });
 
     const swaggerUiOptions = {
+      // tslint:disable-next-line:trailing-comma
       swaggerUrl: "/api-docs.json"
     };
 
     this.app.use(
       "/api-docs",
       swaggerUi.serve,
+      // tslint:disable-next-line:trailing-comma
       swaggerUi.setup(null, swaggerUiOptions)
     );
   }

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "copyStaticHtml": "copyfiles src/views/**/*.ejs -f dist/views/",
-    "start": "npm run build && node dist\\bin\\www.js && npm run copyStaticHtml",
+    "start": "npm run build && npm run copyStaticHtml && node dist\\bin\\www.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
