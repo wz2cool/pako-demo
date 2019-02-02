@@ -26,9 +26,25 @@ export class PakojsApi {
       }
 
       res.writeHead(200, { "Content-Type": "text/plain" });
-      req.pipe(zlibStream).pipe(res);
+      // request to zlibStream.
+      const zlibStreamResult = req.pipe(zlibStream);
+      streamToString(zlibStreamResult, (data: any) => {
+        console.log(data);
+      });
+
+      zlibStreamResult.pipe(res);
     });
 
     return route;
+
+    function streamToString(stream, cb) {
+      const chunks = [];
+      stream.on("data", (chunk: any) => {
+        chunks.push(chunk.toString());
+      });
+      stream.on("end", () => {
+        cb(chunks.join(""));
+      });
+    }
   }
 }
